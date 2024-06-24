@@ -1,20 +1,34 @@
-// The function here takes the parameters that you
-// have declared in the `glide.json` file, in the
-// same order.
-window.function = function (str, start, end) {
-  // For each parameter, its `.value` contains
-  // either its value in the type you've declared,
-  // or it's `undefined`.  This is a good place to
-  // extract the `.value`s and assign default
-  // values.
-  str = str.value ?? "";
-  start = start.value ?? 0;
-  end = end.value;
+// function.js
 
-  // Your function should return the exact type
-  // you've declared for the `result` in
-  // `glide.json`, or `undefined` if there's an
-  // error or no result can be produced, because a
-  // required input is `undefined`, for example.
-  return str.substring(start, end);
+// Convert HTML content to data URL
+function convertHtmlToDataUrl(htmlContent) {
+  try {
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    return url;
+  } catch (error) {
+    console.error('Error converting HTML to data URL:', error.message);
+    return null;
+  }
+}
+
+// Add a print button (hide after clicking)
+function addPrintButton() {
+  const printButton = document.createElement('button');
+  printButton.innerText = 'Print';
+  printButton.addEventListener('click', () => {
+    window.print();
+    printButton.style.display = 'none'; // Hide the button after printing
+  });
+
+  // Append the button to the document (customize this part as needed)
+  document.body.appendChild(printButton);
+}
+
+// Example usage:
+const htmlContent = '<html><body><h1>Hello, world!</h1></body></html>';
+const dataUrl = convertHtmlToDataUrl(htmlContent);
+if (dataUrl) {
+  console.log('Data URL:', dataUrl);
+  addPrintButton();
 }
